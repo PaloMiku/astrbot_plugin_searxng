@@ -1,0 +1,39 @@
+{
+  "searxng_url": {
+    "description": "SearxNG 实例的 URL 地址",
+    "type": "string",
+    "hint": "请输入可访问的 SearxNG 实例 URL，例如：https://searx.example.com",
+    "default": ""
+  },
+  "timeout": {
+    "description": "搜索请求超时时间（秒）",
+    "type": "int",
+    "hint": "搜索 API 请求的超时时间，建议设置为 10-30 秒",
+    "default": 15
+  },
+  "max_results": {
+    "description": "每次搜索返回的最大结果数量",
+    "type": "int", 
+    "hint": "限制每次搜索返回的结果数量，避免响应过长",
+    "default": 8
+  },
+  "categories": {
+    "description": "搜索分类",
+    "type": "string",
+    "hint": "指定搜索的分类，可选值：general, images, videos, news, map, music, it, science, files 等，多个分类用逗号分隔",
+    "default": "general"
+  },
+  "language": {
+    "description": "搜索语言",
+    "type": "string", 
+    "hint": "指定搜索结果的语言，例如：zh-CN（中文）、en（英文）",
+    "default": "zh-CN"
+  },
+  "user_agent": {
+    "description": "HTTP User-Agent",
+    "type": "string",
+    "hint": "自定义 HTTP 请求头中的 User-Agent，留空则使用默认值",
+    "default": "AstrBot-SearxNG-Plugin/1.0.0"
+  }
+
+}
