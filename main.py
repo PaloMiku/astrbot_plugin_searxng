@@ -27,10 +27,12 @@ class SearxNGPlugin(Star):
         """初始化 HTTP 会话"""
         timeout = aiohttp.ClientTimeout(total=self.config.get("timeout", 15))
         headers = {
-            "User-Agent": self.config.get("user_agent", "AstrBot-SearxNG-Plugin/1.0.0")
+            "User-Agent": self.config.get("user_agent", "AstrBot-SearxNG-Plugin/1.0.0"),
+            "Accept": "application/json",
+            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8"
         }
         self.session = aiohttp.ClientSession(timeout=timeout, headers=headers)
-        logger.info("SearxNG 插件初始化完成")
+        logger.info(f"SearxNG 插件初始化完成，目标实例: {self.config.get('searxng_url', 'https://search.sapti.me')}")
 
     async def _search_searxng(self, query: str, categories: Optional[str] = None, language: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -66,8 +68,17 @@ class SearxNGPlugin(Star):
                     data = await response.json()
                     return data
                 else:
-                    logger.error(f"SearxNG 搜索请求失败，状态码: {response.status}")
-                    return {"results": [], "query": query, "error": f"HTTP {response.status}"}
+                    # 403错误的详细信息
+                    error_text = await response.text()
+                    logger.error(f"SearxNG 搜索失败 - 状态码: {response.status}")
+                    logger.error(f"请求URL: {search_url}")
+                    logger.error(f"请求参数: {params}")
+                    logger.error(f"错误响应: {error_text[:200]}...")
+                    
+                    if response.status == 403:
+                        return {"results": [], "query": query, "error": "访问被拒绝 - 可能SearxNG实例禁止API访问或IP被封禁"}
+                    else:
+                        return {"results": [], "query": query, "error": f"HTTP {response.status}"}
         except asyncio.TimeoutError:
             logger.error("SearxNG 搜索请求超时")
             return {"results": [], "query": query, "error": "请求超时"}

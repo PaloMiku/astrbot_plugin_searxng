@@ -1,4 +1,4 @@
-name: searxng # 插件的唯一识别名
+name: astrbot_plugin_searxng # 插件的唯一识别名
 desc: SearxNG AI 搜索工具，为 LLM 提供智能网络搜索能力 # 插件简短描述
 version: v1.0.0 # 插件版本号
 author: PaloMiku # 作者

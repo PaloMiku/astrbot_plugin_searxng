@@ -33,7 +33,7 @@
     "description": "HTTP User-Agent",
     "type": "string",
     "hint": "自定义 HTTP 请求头中的 User-Agent，留空则使用默认值",
-    "default": "AstrBot-SearxNG-Plugin/1.0.0"
+    "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
   }
 
 }
